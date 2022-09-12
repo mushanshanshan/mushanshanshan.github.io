@@ -1,60 +1,1197 @@
 <!DOCTYPE hvtml>
-<!-- saved from url=(0033)https://leiyi420.github.io/glow-wavegan2/ -->
-<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-<title>Demo</title>
-<meta name="generator" content="Jekyll v3.9.0">
-<meta property="og:title" content="TODO: title">
-<meta property="og:locale" content="en_US">
-<link rel="canonical" href="https://leiyi420.github.io/glow-wavegan2/">
-<meta property="og:url" content="https://leiyi420.github.io/glow-wavegan2/">
-<meta name="twitter:card" content="summary">
-<!-- End Jekyll SEO tag -->
-
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>RSA-TV: A Robust zero-shot speaker adaptive text-to-speech and voice conversion model</title>
+    <meta name="generator" content="Jekyll v3.9.0">
+    <meta property="og:title" content="TODO: title">
+    <meta property="og:locale" content="en_US">
+    <!-- End Jekyll SEO tag -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#157878">
+    <meta name="theme-color" content="#212bbf">
     <link rel="stylesheet" href="style.css">
   </head>
   <body data-new-gr-c-s-check-loaded="14.1001.0" data-gr-ext-installed="">
-    <section class="page-header">
-    <!-- <h1 class="project-name">Demo PAGE</h1> -->
-    <!-- <h2 class="project-tagline"></h2> -->
-      
-      
-    </section>
+    <section class="main-content">
+      <h1 id="">
+        <center>RSA-TV: A Robust Zero-shot Speaker Adaptive Text-to-speech and Voice Conversion Model</center>
+      </h1>
+      <center> Wenbin Wang, Yang Song, Sanjay Jha </center>
+      <center> School of Computer Science and Engineering, University of New South Wales, Australia</center>
+      <h2>Contents</h2>
+      <ul>
+        <li><a href="#abstract">Abstract</a></li>
+        <li><a href="#results">Experiment Results</a></li>
+        <li><a href="#tts">Zero-shot Speaker Adaptive Text-to-speech Audio Demos</a></li>
+        <ul>
+          <li><a href="#3.1">Audio Demos in LibriSpeech (In-dataset Zero-shot Text-to-speech)</a></li>
+          <li><a href="#3.2">Audio Demos in VCTK (Cross-dataset Zero-shot Text-to-speech)</a></li>
+          <li><a href="#3.3">Audio Demos in LibriSpeech (The experiment from YourTTS)</a></li>
+        </ul>
+        <li><a href="#vc">Zero-shot Voice Conversion Audio Demos</a></li>
+        <ul>
+          <li><a href="#4.1">Audio Demos in LibriSpeech (Zero-shot Voice Conversion)</a></li>
+          <li><a href="#4.2">Audio Demos in VCTK (Zero-shot Voice Conversion)</a></li>
+        </ul>
+        <li><a href="#conclusion">Conclusion</a></li>
+      </ul>
+      <font size=2><p>* The ground truth, reference, reconstructed speeches are downsampled to 16000Hz.</p></font>
+      <font size=2><p>** We provide two versions of our method's synthesized speech for the audition: the original version (22050 Hz) and the downsample version (16000 Hz). We used the downsample version when conducting the evaluations since StyleSpeech, Meta-StyleSpeech and YourTTS can only produce 16000 Hz speech.</p></font>
+      <font size=2><p>*** YourTTS averages the audio volume in the dataset, and for fairness, we exclusively evaluate YourTTS using the processed ground truth audio (which is slightly different from the ground truth speech in dataset that provided here).</p></font>
+      <h2 id="abstract">1. Abstract<a name="abstract"></a></h2>
+      <p>With the widespread use of speech synthesis technology in recent years, an increasing number of circumstances have necessitated zero-shot speaker adaptive text-to-speech (TTS) and voice conversion (VC), that is, synthesizing speech for new voice based on seconds of reference speech samples, or converting speech from one unseen speaker to another unseen speaker. Existing zero-shot speaker adaptive TTS and VC approaches suffer from inadequate model generalization in out-of-distribution data, resulting in poor synthesized voice quality for unseen speakers. In this paper, we propose RSA-TV, a robust zero-shot speaker adaptive TTS and VC model that can achieve promising performance on unseen speakers. Specifically, we leverage the representation learning capabilities of the variational autoencoder and introduce adversarial training for feature disentanglement to improve model robustness. In addition, we propose reverse speaker similarity loss to improve the speaker similarity of synthesized speech further. Our experiments demonstrate that RSA-TV outperforms all baseline models in both zero-shot TTS and VC tasks.</p>
 
-
-<section class="main-content">
-    <h1 id=""><center>Demo</center></h1>
-
-
-
-<a href="./Lib.html">Libri Speech</a>
-<br>
-<a href="./Libyour.html">Libri Speech (Your-TTS)</a>
-<br>
-<a href="./VCTK.html">VCTK</a>
-<br>
-<a href="./lib-vc.html">Libri Speech (VC)</a>
-<br>
-<a href="./vctk-vc.html">VCTK (VC)</a>
-
-</section>
-
-<section class="main-content">
-    <h1 id=""><center>Eval</center></h1>
-
-
-
-<a href="./LibEval.html">Libri Speech</a>
-
-    </section>
-
-
-
+      <center><img src='images/pipeline.png' ></center>
+      <br><br>
+      <h2 id="results">2. Experiment Results<a name="abstract"></a></h2>
+      <center><img src='images/ttsres.png' width="1500"></center>
+      <center><img src='images/vcres.png' width="700"></center>
+      <br><br>
+      <h2>3. Zero-shot Speaker Adaptive Text-to-speech Audio Demos<a name="tts"></a></h2>
+      <a name="3.1">
+        <h3>3.1 Audio Demos in LibriSpeech (In-dataset Zero-shot Text-to-speech)</h3>
+      </a>
+      <p> You can find all 180 sentences (36 speakers * 5 sentences) that used for evaluation <a href="./Lib.html">here</a>.</p>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: center"><strong>Text</strong></td>
+            <td style="text-align: center">Ground-Truth</td>
+            <td style="text-align: center">Reference</td>
+            <td style="text-align: center">Reconstructed</td>
+            <td style="text-align: center">StyleSpeech</td>
+            <td style="text-align: center">Meta-StyleSpeech</td>
+            <td style="text-align: center">YourTTS</td>
+            <td style="text-align: center">RSA-TTS <font size=2>16khz</font></td>
+            <td style="text-align: center">RSA-TTS <font size=2>22khz</font></td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>1</strong>. If he chooses it, that disposes of the question of its relative utility to him, as compared with other forms of consumption that would not be deprecated on account of their wastefulness.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Gt/3570_5696_000009_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ref/3570_5695_000005_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Re/3570_5696_000009_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Style/3570_5696_000009_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/MetaStyle/3570_5696_000009_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Your/3570_5696_000009_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours16/3570_5696_000009_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours22/3570_5696_000009_000005.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>2</strong>. Holmes made no further allusion to the matter that day, though he sat lost in thought for a long time after our belated dinner.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Gt/1580_141084_000031_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ref/1580_141083_000012_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Re/1580_141084_000031_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Style/1580_141084_000031_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/MetaStyle/1580_141084_000031_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Your/1580_141084_000031_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours16/1580_141084_000031_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours22/1580_141084_000031_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>3</strong>. All the fingers and thumbs of the girl's hands had been carefully formed and stuffed and stitched at the edges, with gold plates at the ends to serve as finger nails.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Gt/1284_1181_000003_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ref/1284_1180_000045_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Re/1284_1181_000003_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Style/1284_1181_000003_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/MetaStyle/1284_1181_000003_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Your/1284_1181_000003_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours16/1284_1181_000003_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours22/1284_1181_000003_000004.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>4</strong>. The troops, once in Utah, had to be provisioned; and everything the settlers could spare was eagerly bought at an unusual price. The gold changed hands.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Gt/4077_13754_000002_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ref/4077_13751_000006_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Re/4077_13754_000002_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Style/4077_13754_000002_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/MetaStyle/4077_13754_000002_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Your/4077_13754_000002_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours16/4077_13754_000002_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours22/4077_13754_000002_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>5</strong>. They "struck" eating till the resolution was rescinded, and Tabby was allowed to remain a helpless invalid entirely dependent upon them.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Gt/3575_170457_000046_000011.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ref/3575_170457_000010_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Re/3575_170457_000046_000011.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Style/3575_170457_000046_000011.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/MetaStyle/3575_170457_000046_000011.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Your/3575_170457_000046_000011.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours16/3575_170457_000046_000011.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours22/3575_170457_000046_000011.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>6</strong>. Glory to God in the highest, And on earth peace, Good will to men.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Gt/2830_3979_000023_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ref/2830_3979_000018_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Re/2830_3979_000023_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Style/2830_3979_000023_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/MetaStyle/2830_3979_000023_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Your/2830_3979_000023_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours16/2830_3979_000023_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours22/2830_3979_000023_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>7</strong>. The fact is, Captain Lake, an accomplished player, made a pretty little revenue of Sir Harry's billiards, which were wild and noisy; and liking his money, thought he liked himself-a confusion not uncommon.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Gt/5683_32866_000025_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ref/5683_32879_000016_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Re/5683_32866_000025_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Style/5683_32866_000025_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/MetaStyle/5683_32866_000025_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Your/5683_32866_000025_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours16/5683_32866_000025_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours22/5683_32866_000025_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>8</strong>. When one listens, by the side of honest men, at the portals of society, one overhears the dialogues of those who are on the outside. One distinguishes questions and replies.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Gt/4507_16021_000033_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ref/4507_16021_000024_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Re/4507_16021_000033_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Style/4507_16021_000033_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/MetaStyle/4507_16021_000033_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Your/4507_16021_000033_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours16/4507_16021_000033_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours22/4507_16021_000033_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>9</strong>. What did it avail to pray when he knew that his soul lusted after its own destruction?</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Gt/1089_134686_000009_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ref/1089_134686_000014_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Re/1089_134686_000009_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Style/1089_134686_000009_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/MetaStyle/1089_134686_000009_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Your/1089_134686_000009_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours16/1089_134686_000009_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours22/1089_134686_000009_000008.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>10</strong>. The atmosphere is charged with vapours, pervaded with the electricity generated by the evaporation of saline waters.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Gt/260_123288_000004_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ref/260_123286_000057_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Re/260_123288_000004_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Style/260_123288_000004_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/MetaStyle/260_123288_000004_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Your/260_123288_000004_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours16/260_123288_000004_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/Ours22/260_123288_000004_000001.wav"></audio>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p></p>
+      <a name="3.2">
+        <h3>3.2 Audio Demos in VCTK (Cross-dataset Zero-shot Text-to-speech)</h3>
+      </a>
+      <p> You can find all 216 sentences (108 speakers * 2 sentences) that used for evaluation <a href="./VCTK.html">here</a>.</p>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: center"><strong>Text</strong></td>
+            <td style="text-align: center">Ground-Truth</td>
+            <td style="text-align: center">Reference</td>
+            <td style="text-align: center">Reconstructed</td>
+            <td style="text-align: center">StyleSpeech</td>
+            <td style="text-align: center">Meta-StyleSpeech</td>
+            <td style="text-align: center">YourTTS</td>
+            <td style="text-align: center">RSA-TTS <font size=2>16khz</font></td>
+            <td style="text-align: center">RSA-TTS <font size=2>22khz</font></td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>1</strong>. I did not have faith in the procedures.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Gt/p316_108.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ref/p316_021.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Re/p316_108.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Style/p316_108.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/MetaStyle/p316_108.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Your/p316_108.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours16/p316_108.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours22/p316_108.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>2</strong>. I want my country to be a republic, not an empire.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Gt/p362_282.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ref/p362_016.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Re/p362_282.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Style/p362_282.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/MetaStyle/p362_282.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Your/p362_282.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours16/p362_282.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours22/p362_282.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>3</strong>. Aristotle thought that the rainbow was caused by reflection of the sun's rays by the rain. </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Gt/p244_018.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ref/p244_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Re/p244_018.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Style/p244_018.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/MetaStyle/p244_018.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Your/p244_018.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours16/p244_018.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours22/p244_018.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>4</strong>. The Greeks used to imagine that it was a sign from the gods to foretell war or heavy rain. </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Gt/p250_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ref/p250_019.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Re/p250_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Style/p250_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/MetaStyle/p250_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Your/p250_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours16/p250_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours22/p250_015.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>5</strong>. I'm going to see my friend.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Gt/p312_186.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ref/p312_018.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Re/p312_186.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Style/p312_186.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/MetaStyle/p312_186.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Your/p312_186.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours16/p312_186.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours22/p312_186.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>6</strong>. He was adamant that he was still ahead on everything that matters.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Gt/p251_319.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ref/p251_014.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Re/p251_319.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Style/p251_319.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/MetaStyle/p251_319.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Your/p251_319.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours16/p251_319.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours22/p251_319.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>7</strong>. Many complicated ideas about the rainbow have been formed.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Gt/p225_020.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ref/p225_014.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Re/p225_020.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Style/p225_020.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/MetaStyle/p225_020.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Your/p225_020.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours16/p225_020.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours22/p225_020.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>8</strong>. The Greeks used to imagine that it was a sign from the gods to foretell war or heavy rain. </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Gt/p286_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ref/p286_021.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Re/p286_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Style/p286_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/MetaStyle/p286_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Your/p286_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours16/p286_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours22/p286_015.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>9</strong>. The Greeks used to imagine that it was a sign from the gods to foretell war or heavy rain.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Gt/p239_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ref/p239_019.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Re/p239_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Style/p239_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/MetaStyle/p239_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Your/p239_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours16/p239_015.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours22/p239_015.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>10</strong>. The rainbow is a division of white light into many beautiful colors.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Gt/p343_007.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ref/p343_004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Re/p343_007.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Style/p343_007.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/MetaStyle/p343_007.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Your/p343_007.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours16/p343_007.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/Ours22/p343_007.wav"></audio>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p></p>
+      <a name="3.3">
+        <h3>3.3 Audio Demos in LibriSpeech (The experiment from YourTTS)</h3>
+      </a>
+      <p> You can find all 50 sentences (10 speakers * 5 sentences) that used for evaluation <a href="./Libyour.html">here</a>.</p>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: center"><strong>Text</strong></td>
+            <td style="text-align: center">Ground-Truth</td>
+            <td style="text-align: center">Reference</td>
+            <td style="text-align: center">YourTTS</td>
+            <td style="text-align: center">RSA-TV</td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>1</strong>. Every chance she could steal after practice hours were over, and after the clamorous demands of the boys upon her time were fully satisfied, was seized to fly on the wings of the wind, to the flowers.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/GT/237_126133_000005_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ref/237_126133_000004_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Your/237_126133_000005_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ours/237_126133_000005_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>2</strong>. Hans pointed with his finger at a dark mass six hundred yards away, rising and falling alternately with heavy plunges.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/GT/260_123286_000040_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ref/260_123286_000032_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Your/260_123286_000040_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ours/260_123286_000040_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>3</strong>. But from the offer that came to teach Negroes--country Negroes, and little ones at that--she shrank, and, indeed, probably would have refused it out of hand had it not been for her queer brother, John.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/GT/1995_1826_000005_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ref/1995_1826_000018_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Your/1995_1826_000005_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ours/1995_1826_000005_000003.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>4</strong>. So, with a great many chucklings and shruggings when no one was by, he had departed after breakfast one day, simply saying he shouldn't be back to lunch.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/GT/237_126133_000014_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ref/237_126133_000004_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Your/237_126133_000014_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ours/237_126133_000014_000001.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>5</strong>. As a matter of fact, the drawn curtain disclosed nothing but three or four suits of clothes hanging from a line of pegs.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/GT/1580_141083_000061_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ref/1580_141083_000001_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Your/1580_141083_000061_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ours/1580_141083_000061_000001.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>6</strong>. But Polly couldn't speak; and if Jasper hadn't caught her just in time, she would have tumbled over backward from the stool, Phronsie and all!</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/GT/237_126133_000023_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ref/237_126133_000004_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Your/237_126133_000023_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ours/237_126133_000023_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>7</strong>. When the lights or motors in the circuit are turned on, and a certain definite small portion of the current is diverted to flow through the meter, from the positive plate to the negative plate, the latter increases in weight by receiving a deposit of metallic zinc; the positive plate meantime losing in weight by the metal thus carried away from it.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/GT/2300_131720_000021_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ref/2300_131720_000012_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Your/2300_131720_000021_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ours/2300_131720_000021_000001.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>8</strong>. And therefore, primarily, they must be able to divide; so that elementary exercises in color must be directed, like first exercises in music, to the clear separation of notes; and the final perfections of color are those in which, of innumerable notes or hues, every one has a distinct office, and can be fastened on by the eye, and approved, as fulfilling it.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/GT/1188_133604_000011_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ref/1188_133604_000006_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Your/1188_133604_000011_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ours/1188_133604_000011_000003.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>9</strong>. Without his scrapbooks, his chemicals, and his homely untidiness, he was an uncomfortable man.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/GT/1580_141083_000006_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ref/1580_141083_000001_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Your/1580_141083_000006_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ours/1580_141083_000006_000001.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>10</strong>. They were of supernatural dimensions; the smallest of them would have crunched our raft, crew and all, at one snap of its huge jaws.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/GT/260_123286_000045_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ref/260_123286_000032_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Your/260_123286_000045_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/Ours/260_123286_000045_000002.wav"></audio>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h2>4. Zero-shot Voice Conversion Audio Demos<a name="vc"></a></h2>
+      <a name="4.1">
+        <h3>4.1 Audio Demos in LibriSpeech (Zero-shot Voice Conversion, unseen speakers to unseen speakers)</h3>
+      </a>
+      <p> You can find all 180 sentences (36 speakers * 5 sentences) that used for evaluation <a href="./lib-vc.html">here</a>.</p>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: center"><strong>Text</strong></td>
+            <td style="text-align: center">Source</td>
+            <td style="text-align: center">Target</td>
+            <td style="text-align: center">YourTTS</td>
+            <td style="text-align: center">RSA-TTS <font size=2>16khz</font></td>
+            <td style="text-align: center">RSA-TTS <font size=2>22khz</font></td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>1</strong>. "The Lord who has given us power to teach and to hear, let Him also give us the power to serve and to do."</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/2830_3979_000021_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/4446_2271_000006_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/2830_3979_000021_000000.4446_2271_000006_000005.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa16/2830_3979_000021_000000.4446_2271_000006_000005.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa22/2830_3979_000021_000000.4446_2271_000006_000005.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>2</strong>. What I mean is that I want you to promise never to see me again, no matter how often I come, no matter how hard I beg."</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/4446_2275_000040_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/6829_68769_000028_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/4446_2275_000040_000004.6829_68769_000028_000000.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa16/4446_2275_000040_000004.6829_68769_000028_000000.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa22/4446_2275_000040_000004.6829_68769_000028_000000.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>3</strong>. With his death closed another epoch in the history of his people, and a successor arose, one who was capable of leading and judging under the changed conditions.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/4077_13754_000011_000006.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/2961_961_000022_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/4077_13754_000011_000006.2961_961_000022_000003.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa16/4077_13754_000011_000006.2961_961_000022_000003.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa22/4077_13754_000011_000006.2961_961_000022_000003.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>4</strong>. The result is that, in order to keep up a decent appearance, the former habitually live hand to mouth to a greater extent than the latter.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/3570_5695_000008_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/2300_131720_000002_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/3570_5695_000008_000002.2300_131720_000002_000002.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa16/3570_5695_000008_000002.2300_131720_000002_000002.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa22/3570_5695_000008_000002.2300_131720_000002_000002.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>5</strong>. saint Paul wrote this epistle because, after his departure from the Galatian churches, Jewish Christian fanatics moved in, who perverted Paul's Gospel of man's free justification by faith in Christ Jesus.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/2830_3980_000012_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/7729_102255_000016_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/2830_3980_000012_000000.7729_102255_000016_000008.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa16/2830_3980_000012_000000.7729_102255_000016_000008.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa22/2830_3980_000012_000000.7729_102255_000016_000008.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>6</strong>. We are yet so little removed from a state of effective slavery as still to be fully sensitive to the sting of any imputation of servility.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/3570_5694_000014_000022.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/237_126133_000005_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/3570_5694_000014_000022.237_126133_000005_000000.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa16/3570_5694_000014_000022.237_126133_000005_000000.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa22/3570_5694_000014_000022.237_126133_000005_000000.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>7</strong>. Well, sir, we never make coffee but in the afternoon. Would you like a good bavaroise, or a decanter of orgeat?"</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/3729_6852_000041_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/5105_28241_000025_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/3729_6852_000041_000001.5105_28241_000025_000001.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa16/3729_6852_000041_000001.5105_28241_000025_000001.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa22/3729_6852_000041_000001.5105_28241_000025_000001.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>8</strong>. Stung by anxiety for this little sister, she upbraided Miss W--- for her fancied indifference to Anne's state of health.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/3575_170457_000048_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/8224_274384_000036_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/3575_170457_000048_000000.8224_274384_000036_000001.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa16/3575_170457_000048_000000.8224_274384_000036_000001.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa22/3575_170457_000048_000000.8224_274384_000036_000001.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>9</strong>. The gods were made in the form of a circle, which is the most perfect figure and the figure of the universe. They were created chiefly of fire, that they might be bright, and were made to know and follow the best, and to be scattered over the heavens, of which they were to be the glory.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/2961_961_000020_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/6829_68769_000086_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/2961_961_000020_000003.6829_68769_000086_000001.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa16/2961_961_000020_000003.6829_68769_000086_000001.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa22/2961_961_000020_000003.6829_68769_000086_000001.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>10</strong>. "So they have: so they have," assented mr King, and then the conversation dropped.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/237_126133_000060_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/4507_16021_000024_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/237_126133_000060_000000.4507_16021_000024_000002.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa16/237_126133_000060_000000.4507_16021_000024_000002.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/rsa22/237_126133_000060_000000.4507_16021_000024_000002.vc.wav"></audio>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p></p>
+      <a name="4.2">
+        <h3>4.2 Audio Demos in VCTK (Zero-shot Voice Conversion, unseen speakers to unseen speakers)</h3>
+      </a>
+      <p> You can find all 216 sentences (108 speakers * 2 sentences) that used for evaluation <a href="./vctk-vc.html">here</a>.</p>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: center"><strong>Text</strong></td>
+            <td style="text-align: center">Source</td>
+            <td style="text-align: center">Targer</td>
+            <td style="text-align: center">YourTTS</td>
+            <td style="text-align: center">RSA-TTS <font size=2>16khz</font></td>
+            <td style="text-align: center">RSA-TTS <font size=2>22khz</font></td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>1</strong>. There is , according to legend, a boiling pot of gold at one end. </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p248_009.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p316_256.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p248_009.p316_256.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa16/p248_009.p316_256.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa22/p248_009.p316_256.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>2</strong>. When the sunlight strikes raindrops in the air, they act as a prism and form a rainbow. </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p237_006.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p362_011.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p237_006.p362_011.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa16/p237_006.p362_011.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa22/p237_006.p362_011.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>3</strong>. Sex offender programmes to be retained by public sector.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p245_341.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p247_011.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p245_341.p247_011.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa16/p245_341.p247_011.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa22/p245_341.p247_011.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>4</strong>. Since then physicists have found that it is not reflection, but refraction by the raindrops which causes the rainbows. </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p286_019.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p304_023.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p286_019.p304_023.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa16/p286_019.p304_023.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa22/p286_019.p304_023.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>5</strong>. If the red of the second bow falls upon the green of the first, the result is to give a bow with an abnormally wide yellow band, since red and green light when mixed form yellow. </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p236_023.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p268_012.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p236_023.p268_012.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa16/p236_023.p268_012.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa22/p236_023.p268_012.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>6</strong>. These take the shape of a long round arch, with its path high above, and its two ends apparently beyond the horizon.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p299_008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p239_003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p299_008.p239_003.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa16/p299_008.p239_003.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa22/p299_008.p239_003.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>7</strong>. If the red of the second bow falls upon the green of the first, the result is to give a bow with an abnormally wide yellow band, since red and green light when mixed form yellow. </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p240_023.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p227_180.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p240_023.p227_180.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa16/p240_023.p227_180.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa22/p240_023.p227_180.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>8</strong>. Some have accepted it as a miracle without physical explanation. </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p283_013.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p323_011.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p283_013.p323_011.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa16/p283_013.p323_011.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa22/p283_013.p323_011.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>9</strong>. The departure of Mr Johnston was reported by The Herald yesterday.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p288_290.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p263_021.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p288_290.p263_021.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa16/p288_290.p263_021.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa22/p288_290.p263_021.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>10</strong>. Europe has lost its way under the socialists.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p301_204.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p268_355.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p301_204.p268_355.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa16/p301_204.p268_355.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/rsa22/p301_204.p268_355.vc.wav"></audio>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h2 id="abstract">5. Conclusion<a name="abstract"></a></h2>
+      <p>In this paper, we proposed RSA-TV, a robust zero-shot speaker adaptive TTS and VC model. In particular, we leverage the feature extraction capacity of the variational autoencoder for improving speaker feature extraction and introduce adversarial training for text and speaker feature disentanglement. In addition, we propose a novel reverse speaker representation loss for Vits. Experiment results demonstrate that RSA-TV achieves signiﬁcantly improved adaptation performance in the zero-shot scenario.</p>
       <footer class="site-footer">
-        
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com/">GitHub Pages</a>.</span>
       </footer>
     </section>
-</body></html>
+  </body>
+</html>
