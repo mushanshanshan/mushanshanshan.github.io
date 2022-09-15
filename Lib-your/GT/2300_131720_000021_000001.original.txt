@@ -1,1 +1,0 @@
-When the lights or motors in the circuit are turned on, and a certain definite small portion of the current is diverted to flow through the meter, from the positive plate to the negative plate, the latter increases in weight by receiving a deposit of metallic zinc; the positive plate meantime losing in weight by the metal thus carried away from it.
