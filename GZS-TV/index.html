@@ -2,7 +2,7 @@
 <html lang="en-US">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>RSA-TV: A Robust zero-shot speaker adaptive text-to-speech and voice conversion model</title>
+    <title>GZS-TV: A Generalizable zero-shot speaker adaptive text-to-speech and voice conversion model</title>
     <meta name="generator" content="Jekyll v3.9.0">
     <meta property="og:title" content="TODO: title">
     <meta property="og:locale" content="en_US">
@@ -14,7 +14,7 @@
   <body data-new-gr-c-s-check-loaded="14.1001.0" data-gr-ext-installed="">
     <section class="main-content">
       <h1 id="">
-        <center>RSA-TV: A Robust Zero-shot Speaker Adaptive Text-to-speech and Voice Conversion Model</center>
+        <center>GZS-TV: A Generalizable zero-shot speaker adaptive text-to-speech and voice conversion model</center>
       </h1>
       <center> Wenbin Wang, Yang Song, Sanjay Jha </center>
       <center> School of Computer Science and Engineering, University of New South Wales, Australia</center>
@@ -46,7 +46,7 @@
         <p>*** YourTTS averages the audio volume in the dataset, and for fairness, we exclusively evaluate YourTTS using the processed ground truth audio (which is slightly different from the ground truth speech in dataset that provided here).</p>
       </font>
       <h2 id="abstract">1. Abstract<a name="abstract"></a></h2>
-      <p>While most of the research into speech synthesis have focused on synthesizing high-quality speech for in-dataset speakers, an equally essential yet unsolved problem is synthesizing speech for unseen speakers who are out-of-dataset with limited reference data, i.e., speaker adaptive speech synthesis. Many studies have proposed zero-shot speaker adaptive text-to-speech (TTS) and voice conversion (VC) approaches aimed at this task. However, these approaches suffer inferior quality of synthesized speech under zero-shot scenarios and performance degradation when synthesizing speech for unseen speakers. To tickle these problems, we propose RSATV, a robust zero-shot speaker adaptive TTS and VC model. Specifically, we leverage the representation learning capabilities of the variational autoencoder (VAE) and introduce feature disentanglement learning to improve model robustness. In addition, we propose reverse speaker similarity loss to improve the speaker similarity of synthesized speech further. Our experiments demonstrate that RSA-TV outperforms all baseline models in both zero-shot TTS and VC tasks.</p>
+      <p>While most of the research into speech synthesis have focused on synthesizing high-quality speech for in-dataset speakers, an equally essential yet unsolved problem is synthesizing speech for unseen speakers who are out-of-dataset with limited reference data, i.e., speaker adaptive speech synthesis. Many studies have proposed zero-shot speaker adaptive text-to-speech (TTS) and voice conversion (VC) approaches aimed at this task. However, these approaches suffer inferior quality of synthesized speech under zero-shot scenarios and performance degradation when synthesizing speech for unseen speakers. To tackle these problems, we propose GZSTV, a generalizable zero-shot speaker adaptive TTS and VC model. Specifically, we leverage the representation learning capability of the variational autoencoder and introduce feature disentanglement learning to improve model generalization ability. In addition, we propose reverse timbre similarity loss to further improve the timbre similarity of synthesized speech. Our experiments demonstrate that GZS-TV outperforms all baseline models in both zero-shot TTS and VC tasks.</p>
       <center><img src='images/pipeline.png' ></center>
       <br><br>
       <h2 id="results">2. Experiment Results<a name="abstract"></a></h2>
@@ -69,8 +69,8 @@
             <td style="text-align: center">StyleSpeech</td>
             <td style="text-align: center">Meta-StyleSpeech</td>
             <td style="text-align: center">YourTTS</td>
-            <td style="text-align: center">RSA-TTS <font size=2>16khz</font></td>
-            <td style="text-align: center">RSA-TTS <font size=2>22khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>16khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>22khz</font></td>
           </tr>
           <tr>
             <td style="text-align: left"><strong>1</strong>. He was unjustly charged with favoring secession; but the charge was soon disproved.</td>
@@ -359,8 +359,8 @@
             <td style="text-align: center">StyleSpeech</td>
             <td style="text-align: center">Meta-StyleSpeech</td>
             <td style="text-align: center">YourTTS</td>
-            <td style="text-align: center">RSA-TTS <font size=2>16khz</font></td>
-            <td style="text-align: center">RSA-TTS <font size=2>22khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>16khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>22khz</font></td>
           </tr>
           <tr>
             <td style="text-align: left"><strong>1</strong>. It is perfectly evident that the time for an inquiry will come.</td>
@@ -815,8 +815,8 @@
             <td style="text-align: center">StyleSpeech</td>
             <td style="text-align: center">Meta-StyleSpeech</td>
             <td style="text-align: center">YourTTS</td>
-            <td style="text-align: center">RSA-TTS <font size=2>16khz</font></td>
-            <td style="text-align: center">RSA-TTS <font size=2>22khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>16khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>22khz</font></td>
           </tr>
           <tr>
             <td style="text-align: left"><strong>1</strong>. Such was Catherine Morland at ten.</td>
@@ -1103,8 +1103,8 @@
             <td style="text-align: center">Source</td>
             <td style="text-align: center">Target</td>
             <td style="text-align: center">YourTTS</td>
-            <td style="text-align: center">RSA-TTS <font size=2>16khz</font></td>
-            <td style="text-align: center">RSA-TTS <font size=2>22khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>16khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>22khz</font></td>
           </tr>
           <tr>
             <td style="text-align: left"><strong>1</strong>. "The more one knows, the luckier he is, for knowledge is the greatest gift in life."</td>
@@ -1300,8 +1300,8 @@
             <td style="text-align: center">Source</td>
             <td style="text-align: center">Targer</td>
             <td style="text-align: center">YourTTS</td>
-            <td style="text-align: center">RSA-TTS <font size=2>16khz</font></td>
-            <td style="text-align: center">RSA-TTS <font size=2>22khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>16khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>22khz</font></td>
           </tr>
           <tr>
             <td style="text-align: left"><strong>1</strong>. We didn't know if people would turn up.</td>
@@ -1486,7 +1486,7 @@
         </tbody>
       </table>
       <h2 id="abstract">5. Conclusion<a name="abstract"></a></h2>
-      <p>In this paper, we proposed RSA-TV, a robust zero-shot speaker adaptive TTS and VC model. Specifically, we leverage the representation learning capabilities of the VAE and introduce feature disentanglement learning to improve model robustness. In addition, we propose reverse speaker similarity loss to improve the speaker similarity of synthesized speech further. Experiment results demonstrate that RSA-TV achieves significantly improved adaptation performance in both zero-shot TTS and VC tasks. For future work, we plan to tickle with the loss of speaker information caused by normalizing flow and speaker encoder to improve synthesized audio quality.</p>
+      <p>We proposed GZS-TV, a generalizable zero-shot speaker adaptive TTS and VC model. Specifically, we leverage the VAE and feature disentanglement learning to improve the capacity and generalization ability of GZS-TV. Besides that, we propose a reverse timbre similarity loss to improve the speaker similarity of synthesized speeches. The experimental results demonstrate that GZS-TV can synthesize high-quality speech in ZS scenarios and minimize the performance gaps between seen and unseen speakers. For future work, we plan to investigate speaker information extraction and speaker and text information fusion approaches in ZS scenarios, hence improving the applicability of ZS speaker adaptive TTS in various real-world applications.</p>
       <footer class="site-footer">
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com/">GitHub Pages</a>.</span>
       </footer>
