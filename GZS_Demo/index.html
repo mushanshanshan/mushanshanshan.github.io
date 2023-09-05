@@ -1,0 +1,1494 @@
+<!DOCTYPE hvtml>
+<html lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Generalizable Zero-Shot Speaker Adaptive Speech Synthesis with Disentangled Representations</title>
+    <meta name="generator" content="Jekyll v3.9.0">
+    <meta property="og:title" content="TODO: title">
+    <meta property="og:locale" content="en_US">
+    <!-- End Jekyll SEO tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#212bbf">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body data-new-gr-c-s-check-loaded="14.1001.0" data-gr-ext-installed="">
+    <section class="main-content">
+      <h1 id="">
+        <center>Generalizable Zero-Shot Speaker Adaptive Speech Synthesis with Disentangled Representations</center>
+      </h1>
+      <center> Anonymous </center>
+      <h2>Contents</h2>
+      <ul>
+        <li><a href="#abstract">Abstract</a></li>
+        <li><a href="#results">Experiment Results</a></li>
+        <li><a href="#tts">Zero-shot Speaker Adaptive Text-to-speech Audio Demos</a></li>
+        <ul>
+          <li><a href="#3.1">Audio Demos in LibriSpeech (In-dataset Zero-shot Text-to-speech)</a></li>
+          <li><a href="#3.2">Audio Demos in VCTK (Cross-dataset Zero-shot Text-to-speech)</a></li>
+          <li><a href="#3.3">Audio Demos in LibriSpeech (The experiment from YourTTS)</a></li>
+          <li><a href="#3.4">Audio Demos in LibriSpeech (Text-to-speech for Seen Speakers)</a></li>
+        </ul>
+        <li><a href="#vc">Zero-shot Voice Conversion Audio Demos</a></li>
+        <ul>
+          <li><a href="#4.1">Audio Demos in LibriSpeech (Zero-shot Voice Conversion)</a></li>
+          <li><a href="#4.2">Audio Demos in VCTK (Zero-shot Voice Conversion)</a></li>
+        </ul>
+        <li><a href="#conclusion">Conclusion</a></li>
+      </ul>
+      <font size=2>
+        <p>* The ground truth, reference, reconstructed speeches are downsampled to 16000 Hz.</p>
+      </font>
+      <font size=2>
+        <p>** We provide two versions of our method's synthesized speech for the audition: the original version (22050 Hz) and the downsample version (16000 Hz). We used the downsample version when conducting the evaluations since StyleSpeech, Meta-StyleSpeech and YourTTS can only produce 16000 Hz speech.</p>
+      </font>
+      <font size=2>
+        <p>*** YourTTS averages the audio volume in the dataset, and for fairness, we exclusively evaluate YourTTS using the processed ground truth audio (which is slightly different from the ground truth speech in dataset that provided here).</p>
+      </font>
+      <h2 id="abstract">1. Abstract<a name="abstract"></a></h2>
+      <p>While most research into speech synthesis has focused on synthesizing high-quality speech for in-dataset speakers, an equally essential yet unsolved problem is synthesizing speech for unseen speakers who are out-of-dataset with limited reference data, i.e., speaker adaptive speech synthesis. Many studies have proposed zero-shot speaker adaptive text-to-speech and voice conversion approaches aimed at this task. However, most current approaches suffer from degradation of naturalness and speaker similarity degradation when synthesizing speech for unseen speakers (i.e., speakers not in the training dataset) due to the poor generalizability of the model in out-of-distribution data. To address this problem, we propose GZS-TV, a generalizable zero-shot speaker adaptive text-to-speech and voice conversion model. GZS-TV introduces disentangled representation learning for both speaker embedding extraction and timbre transformation to improve model generalization and leverages the representation learning capability of the variational autoencoder to enhance the speaker encoder. Our experiments demonstrate that GZS-TV reduces performance degradation on unseen speakers and outperforms all baseline models in multiple datasets.</p>
+      <center><img src='images/pipeline.png' ></center>
+      <br><br>
+      <h2 id="results">2. Experiment Results<a name="abstract"></a></h2>
+      <center><img src='images/ttsres.png' width="1500"></center>
+      <p> </p>
+      <center><img src='images/vcres.png' width="700"></center>
+      <br><br>
+      <h2>3. Zero-shot Speaker Adaptive Text-to-speech Audio Demos<a name="tts"></a></h2>
+      <a name="3.1">
+        <h3>3.1 Audio Demos in LibriSpeech (In-dataset Zero-shot Text-to-speech)</h3>
+      </a>
+      <p> You can find all 185 sentences (37 speakers * 5 sentences) that used for evaluation <a href="./Lib.html">here</a>.</p>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: center"><strong>Text</strong></td>
+            <td style="text-align: center">Ground-Truth</td>
+            <td style="text-align: center">Reference</td>
+            <td style="text-align: center">Reconstructed</td>
+            <td style="text-align: center">StyleSpeech</td>
+            <td style="text-align: center">Meta-StyleSpeech</td>
+            <td style="text-align: center">YourTTS</td>
+            <td style="text-align: center">GZS-TV <font size=2>16khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>22khz</font></td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>1</strong>. He was unjustly charged with favoring secession; but the charge was soon disproved.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/gt/4077_13754_000003_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/ref/4077_13754_000014_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/re/4077_13754_000003_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/st/4077_13754_000003_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/mst/4077_13754_000003_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/your/4077_13754_000003_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/16/4077_13754_000003_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/22/4077_13754_000003_000005.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>2</strong>. The lad was thirty years old, and his age to that of his employer was as fifteen is to twenty.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/gt/8463_294828_000021_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/ref/8463_294828_000013_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/re/8463_294828_000021_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/st/8463_294828_000021_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/mst/8463_294828_000021_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/your/8463_294828_000021_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/16/8463_294828_000021_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/22/8463_294828_000021_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>3</strong>. Holmes looked triumphantly at Bannister.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/gt/1580_141084_000082_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/ref/1580_141083_000045_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/re/1580_141084_000082_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/st/1580_141084_000082_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/mst/1580_141084_000082_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/your/1580_141084_000082_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/16/1580_141084_000082_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/22/1580_141084_000082_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>4</strong>. We were resolved not to present this entire mass of exegesis.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/gt/2830_3979_000017_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/ref/2830_3980_000024_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/re/2830_3979_000017_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/st/2830_3979_000017_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/mst/2830_3979_000017_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/your/2830_3979_000017_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/16/2830_3979_000017_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/22/2830_3979_000017_000003.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>5</strong>. The London plant was less temporary, but not permanent, supplying before it was torn out no fewer than three thousand lamps in hotels, churches, stores, and dwellings in the vicinity of Holborn Viaduct.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/gt/2300_131720_000002_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/ref/2300_131720_000035_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/re/2300_131720_000002_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/st/2300_131720_000002_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/mst/2300_131720_000002_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/your/2300_131720_000002_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/16/2300_131720_000002_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/22/2300_131720_000002_000002.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>6</strong>. The Scottish National Hymn.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/gt/121_121726_000031_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/ref/121_127105_000014_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/re/121_121726_000031_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/st/121_121726_000031_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/mst/121_121726_000031_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/your/121_121726_000031_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/16/121_121726_000031_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/22/121_121726_000031_000001.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>7</strong>. "I want it to bring my Patchwork Girl to life."</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/gt/1284_1180_000044_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/ref/1284_1180_000050_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/re/1284_1180_000044_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/st/1284_1180_000044_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/mst/1284_1180_000044_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/your/1284_1180_000044_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/16/1284_1180_000044_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/22/1284_1180_000044_000001.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>8</strong>. You may wonder to hear me speak thus, being so young.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/gt/5639_40744_000004_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/ref/5639_40744_000007_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/re/5639_40744_000004_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/st/5639_40744_000004_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/mst/5639_40744_000004_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/your/5639_40744_000004_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/16/5639_40744_000004_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/22/5639_40744_000004_000008.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>9</strong>. I can see Douglas there before the fire, to which he had got up to present his back, looking down at his interlocutor with his hands in his pockets.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/gt/121_127105_000010_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/ref/121_127105_000022_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/re/121_127105_000010_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/st/121_127105_000010_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/mst/121_127105_000010_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/your/121_127105_000010_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/16/121_127105_000010_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/22/121_127105_000010_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>10</strong>. We stood dumb with fear.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/gt/260_123286_000048_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/ref/260_123286_000021_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/re/260_123286_000048_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/st/260_123286_000048_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/mst/260_123286_000048_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/your/260_123286_000048_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/16/260_123286_000048_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib/22/260_123286_000048_000000.wav"></audio>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p></p>
+      <a name="3.2">
+        <h3>3.2 Audio Demos in VCTK (Cross-dataset Zero-shot Text-to-speech)</h3>
+      </a>
+      <p> You can find all 216 sentences (108 speakers * 2 sentences) that used for evaluation <a href="./VCTK.html">here</a>.</p>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: center"><strong>Text</strong></td>
+            <td style="text-align: center">Ground-Truth</td>
+            <td style="text-align: center">Reference</td>
+            <td style="text-align: center">Reconstructed</td>
+            <td style="text-align: center">StyleSpeech</td>
+            <td style="text-align: center">Meta-StyleSpeech</td>
+            <td style="text-align: center">YourTTS</td>
+            <td style="text-align: center">GZS-TV <font size=2>16khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>22khz</font></td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>1</strong>. It is perfectly evident that the time for an inquiry will come.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/gt/p285_223.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/ref/p285_227.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/re/p285_223.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/st/p285_223.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/mst/p285_223.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/your/p285_223.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/16/p285_223.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/22/p285_223.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>2</strong>. Do I have a favourite?</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/gt/p234_088.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/ref/p234_336.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/re/p234_088.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/st/p234_088.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/mst/p234_088.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/your/p234_088.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/16/p234_088.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/22/p234_088.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>3</strong>. The statement contained no surprises.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/gt/p278_240.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/ref/p278_125.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/re/p278_240.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/st/p278_240.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/mst/p278_240.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/your/p278_240.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/16/p278_240.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/22/p278_240.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>4</strong>. Since then physicists have found that it is not reflection, but refraction by the raindrops which causes the rainbows.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/gt/p340_019.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/ref/p340_302.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/re/p340_019.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/st/p340_019.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/mst/p340_019.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/your/p340_019.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/16/p340_019.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/22/p340_019.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>5</strong>. He took me on a tour of the wards.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/gt/p241_035.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/ref/p241_098.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/re/p241_035.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/st/p241_035.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/mst/p241_035.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/your/p241_035.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/16/p241_035.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/22/p241_035.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>6</strong>. I was the sheep.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/gt/p282_288.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/ref/p282_356.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/re/p282_288.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/st/p282_288.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/mst/p282_288.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/your/p282_288.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/16/p282_288.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/22/p282_288.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>7</strong>. Calvin was always recognised as a player with potential.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/gt/p239_407.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/ref/p239_152.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/re/p239_407.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/st/p239_407.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/mst/p239_407.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/your/p239_407.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/16/p239_407.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/22/p239_407.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>8</strong>. Everyone can be bought.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/gt/p245_158.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/ref/p245_270.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/re/p245_158.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/st/p245_158.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/mst/p245_158.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/your/p245_158.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/16/p245_158.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/22/p245_158.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>9</strong>. If you could have dinner with anyone, who would it be?</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/gt/p299_100.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/ref/p299_229.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/re/p299_100.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/st/p299_100.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/mst/p299_100.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/your/p299_100.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/16/p299_100.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/22/p299_100.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>10</strong>. We also need a small plastic snake and a big toy frog for the kids.  </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/gt/p233_004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/ref/p233_184.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/re/p233_004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/st/p233_004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/mst/p233_004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/your/p233_004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/16/p233_004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="VCTK/22/p233_004.wav"></audio>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p></p>
+      <a name="3.3">
+        <h3>3.3 Audio Demos in LibriSpeech (The experiment from YourTTS)</h3>
+      </a>
+      <p> You can find all 50 sentences (10 speakers * 5 sentences) that used for evaluation <a href="./Libyour.html">here</a>.</p>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: center"><strong>Text</strong></td>
+            <td style="text-align: center">Reference</td>
+            <td style="text-align: center">YourTTS</td>
+            <td style="text-align: center">RSA-TV <font size=2>16khz</font></td>
+            <td style="text-align: center">RSA-TV <font size=2>22khz</font></td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>1</strong>. If you thought I lived in New York, why in the world didn't you come and see me ? the lady inquired.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/ref/1284_1180_000005_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/your/1284_0.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/16/1284_0.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/22/1284_0.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>2</strong>. He thought he detected a pleasant smell of herbs, like the potpourri his mother had in bowls in their house.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/ref/1284_1180_000005_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/your/1284_1.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/16/1284_1.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/22/1284_1.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>3</strong>. When we came up I told Miller to shut the bank door, which they had left open in their hurry.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/ref/1284_1180_000005_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/your/1284_2.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/16/1284_2.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/22/1284_2.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>4</strong>. This is my schooling, major; and if one neglects the book, there is little chance of learning from the open land of Providence.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/ref/1284_1180_000005_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/your/1284_3.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/16/1284_3.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/22/1284_3.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>5</strong>. Very much of squalor and discomfort will be endured before the last trinket or the last pretense of pecuniary decency is put away.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/ref/1284_1180_000005_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/your/1284_4.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/16/1284_4.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/22/1284_4.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>6</strong>. I knew you could not choose but like her; but yet, let me tell you, you have seen but the worst of her.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/ref/908_31957_000025_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/your/908_5.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/16/908_5.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/22/908_5.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>7</strong>. Rodolfo meanwhile having returned home, and having missed the crucifix, guessed who had taken it, but gave himself no concern about it.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/ref/908_31957_000025_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/your/908_6.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/16/908_6.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/22/908_6.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>8</strong>. The Land decree of the Congress of Soviets is identical in its fundamentals with the decisions of the first Peasants' Congress.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/ref/908_31957_000025_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/your/908_7.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/16/908_7.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/22/908_7.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>9</strong>. My new friend was a poet as I was; he was an admirer of Italian literature, while I admired the French.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/ref/908_31957_000025_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/your/908_8.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/16/908_8.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/22/908_8.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>10</strong>. Its creed provides for the protection of all men in their rights of worship according to the dictates of conscience.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/ref/908_31957_000025_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/your/908_9.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/16/908_9.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="Lib-your/22/908_9.wav"></audio>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p></p>
+      <a name="3.4">
+        <h3>3.4 Audio Demos in LibriSpeech (Text-to-speech for Seen Speakers)</h3>
+      </a>
+      <p> You can find all 185 sentences (37 speakers * 5 sentences) that used for evaluation <a href="./lib-seen.html">here</a>.</p>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: center"><strong>Text</strong></td>
+            <td style="text-align: center">Ground-Truth</td>
+            <td style="text-align: center">Reference</td>
+            <td style="text-align: center">Reconstructed</td>
+            <td style="text-align: center">StyleSpeech</td>
+            <td style="text-align: center">Meta-StyleSpeech</td>
+            <td style="text-align: center">YourTTS</td>
+            <td style="text-align: center">GZS-TV <font size=2>16khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>22khz</font></td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>1</strong>. Such was Catherine Morland at ten.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/gt/19_198_000010_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/ref/19_198_000024_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/re/19_198_000010_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/st/19_198_000010_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/mst/19_198_000010_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/your/19_198_000010_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/16/19_198_000010_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/22/19_198_000010_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>2</strong>. Whistler won the case.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/gt/5778_54535_000017_000006.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/ref/5778_54535_000001_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/re/5778_54535_000017_000006.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/st/5778_54535_000017_000006.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/mst/5778_54535_000017_000006.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/your/5778_54535_000017_000006.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/16/5778_54535_000017_000006.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/22/5778_54535_000017_000006.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>3</strong>. At the commencement of summer, we began to feel, that the mischief which had taken place in distant countries was greater than we had at first suspected.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/gt/2002_139469_000015_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/ref/2002_139469_000016_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/re/2002_139469_000015_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/st/2002_139469_000015_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/mst/2002_139469_000015_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/your/2002_139469_000015_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/16/2002_139469_000015_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/22/2002_139469_000015_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>4</strong>. Georgie Merriles and Patty had just strolled home from the athletic field, where they had been witnessing the start of a paper chase cross country, in which Priscilla was impersonating a fox. As they entered the study, Georgie stopped to examine some loose sheets of paper which were impaled upon the door.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/gt/6415_100596_000005_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/ref/6415_116629_000030_000006.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/re/6415_100596_000005_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/st/6415_100596_000005_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/mst/6415_100596_000005_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/your/6415_100596_000005_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/16/6415_100596_000005_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/22/6415_100596_000005_000002.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>5</strong>. Both educators and criminologists have indeed often raised such questions, and social reformers have not seldom seen there wide perspectives for social movements in future times.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/gt/1355_39947_000011_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/ref/1355_39947_000016_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/re/1355_39947_000011_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/st/1355_39947_000011_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/mst/1355_39947_000011_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/your/1355_39947_000011_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/16/1355_39947_000011_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/22/1355_39947_000011_000002.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>6</strong>. Besides, Josiana, while she knew herself to be a bastard, felt herself a princess, and carried her authority over him with a high tone in all their arrangements.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/gt/6147_34605_000004_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/ref/6147_34606_000007_000008.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/re/6147_34605_000004_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/st/6147_34605_000004_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/mst/6147_34605_000004_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/your/6147_34605_000004_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/16/6147_34605_000004_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/22/6147_34605_000004_000005.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>7</strong>. "Then these people will be surprised, and say, 'Lord when did we ever do anything for you?'</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/gt/1970_28415_000051_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/ref/1970_26100_000029_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/re/1970_28415_000051_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/st/1970_28415_000051_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/mst/1970_28415_000051_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/your/1970_28415_000051_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/16/1970_28415_000051_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/22/1970_28415_000051_000000.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>8</strong>. Isabel had spoken to him very often about "specimens;" it was a word that played a considerable part in her vocabulary; she had given him to understand that she wished to see English society illustrated by eminent cases.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/gt/1098_133695_000015_000009.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/ref/1098_133695_000009_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/re/1098_133695_000015_000009.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/st/1098_133695_000015_000009.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/mst/1098_133695_000015_000009.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/your/1098_133695_000015_000009.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/16/1098_133695_000015_000009.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/22/1098_133695_000015_000009.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>9</strong>. This is principally due to their lack of time.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/gt/1263_139804_000027_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/ref/1263_141777_000001_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/re/1263_139804_000027_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/st/1263_139804_000027_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/mst/1263_139804_000027_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/your/1263_139804_000027_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/16/1263_139804_000027_000005.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/22/1263_139804_000027_000005.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>10</strong>. They brought or sent her tribute, flowers, candy, and cigarets.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/gt/4018_103416_000032_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/ref/4018_107312_000032_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/re/4018_103416_000032_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/st/4018_103416_000032_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/mst/4018_103416_000032_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/your/4018_103416_000032_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/16/4018_103416_000032_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-seen/22/4018_103416_000032_000001.wav"></audio>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p></p>
+      <h2>4. Zero-shot Voice Conversion Audio Demos<a name="vc"></a></h2>
+      <a name="4.1">
+        <h3>4.1 Audio Demos in LibriSpeech (Zero-shot Voice Conversion, unseen speakers to unseen speakers)</h3>
+      </a>
+      <p> You can find all 180 sentences (36 speakers * 5 sentences) that used for evaluation <a href="./lib-vc.html">here</a>.</p>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: center"><strong>Text</strong></td>
+            <td style="text-align: center">Source</td>
+            <td style="text-align: center">Target</td>
+            <td style="text-align: center">YourTTS</td>
+            <td style="text-align: center">GZS-TV <font size=2>16khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>22khz</font></td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>1</strong>. "The more one knows, the luckier he is, for knowledge is the greatest gift in life."</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/1284_1180_000042_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/4992_41797_000019_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/1284_1180_000042_000001.4992_41797_000019_000001.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/1284_1180_000042_000001.4992_41797_000019_000001.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/1284_1180_000042_000001.4992_41797_000019_000001.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>2</strong>. What is it like?"</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/672_122797_000011_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/1320_122612_000006_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/672_122797_000011_000002.1320_122612_000006_000002.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/672_122797_000011_000002.1320_122612_000006_000002.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/672_122797_000011_000002.1320_122612_000006_000002.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>3</strong>. The London plant was less temporary, but not permanent, supplying before it was torn out no fewer than three thousand lamps in hotels, churches, stores, and dwellings in the vicinity of Holborn Viaduct.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/2300_131720_000002_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/7127_75947_000007_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/2300_131720_000002_000002.7127_75947_000007_000000.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/2300_131720_000002_000002.7127_75947_000007_000000.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/2300_131720_000002_000002.7127_75947_000007_000000.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>4</strong>. Thus, in Chaucer's "Dream":</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/1188_133604_000048_000003.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/8555_284447_000020_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/1188_133604_000048_000003.8555_284447_000020_000004.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/1188_133604_000048_000003.8555_284447_000020_000004.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/1188_133604_000048_000003.8555_284447_000020_000004.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>5</strong>. Who are we ourselves?</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/4507_16021_000035_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/5683_32866_000036_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/4507_16021_000035_000002.5683_32866_000036_000000.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/4507_16021_000035_000002.5683_32866_000036_000000.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/4507_16021_000035_000002.5683_32866_000036_000000.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>6</strong>. Like a scene on some vague arras, old as man's weariness, the image of the seventh city of christendom was visible to him across the timeless air, no older nor more weary nor less patient of subjection than in the days of the thingmote.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/1089_134691_000015_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/5683_32866_000039_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/1089_134691_000015_000002.5683_32866_000039_000002.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/1089_134691_000015_000002.5683_32866_000039_000002.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/1089_134691_000015_000002.5683_32866_000039_000002.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>7</strong>. She called him a little gentleman and said that he was so fine that he might go to the royal court ball.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/7021_85628_000013_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/1188_133604_000023_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/7021_85628_000013_000001.1188_133604_000023_000000.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/7021_85628_000013_000001.1188_133604_000023_000000.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/7021_85628_000013_000001.1188_133604_000023_000000.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>8</strong>. "Oh, I can't wait for the story!"</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/121_127105_000032_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/2300_131720_000035_000004.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/121_127105_000032_000000.2300_131720_000035_000004.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/121_127105_000032_000000.2300_131720_000035_000004.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/121_127105_000032_000000.2300_131720_000035_000004.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>9</strong>. Water flowed freely through Cousin Ann's expensive pipes, that had been buried so deep in their trenches that the winter frosts could not affect them.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/4992_41806_000003_000000.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/1580_141084_000087_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/4992_41806_000003_000000.1580_141084_000087_000001.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/4992_41806_000003_000000.1580_141084_000087_000001.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/4992_41806_000003_000000.1580_141084_000087_000001.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>10</strong>. Good bye, feet!' (for when she looked down at her feet, they seemed to be almost out of sight, they were getting so far off). 'Oh, my poor little feet, I wonder who will put on your shoes and stockings for you now, dears?</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/260_123440_000002_000001.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/7176_88083_000018_000002.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/260_123440_000002_000001.7176_88083_000018_000002.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/260_123440_000002_000001.7176_88083_000018_000002.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/260_123440_000002_000001.7176_88083_000018_000002.vc.wav"></audio>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p></p>
+      <a name="4.2">
+        <h3>4.2 Audio Demos in VCTK (Zero-shot Voice Conversion, unseen speakers to unseen speakers)</h3>
+      </a>
+      <p> You can find all 216 sentences (108 speakers * 2 sentences) that used for evaluation <a href="./vctk-vc.html">here</a>.</p>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: center"><strong>Text</strong></td>
+            <td style="text-align: center">Source</td>
+            <td style="text-align: center">Targer</td>
+            <td style="text-align: center">YourTTS</td>
+            <td style="text-align: center">GZS-TV <font size=2>16khz</font></td>
+            <td style="text-align: center">GZS-TV <font size=2>22khz</font></td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>1</strong>. We didn't know if people would turn up.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p303_218.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p236_162.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p303_218.p236_162.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/16/p303_218.p236_162.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/22/p303_218.p236_162.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>2</strong>. I don't know why you say goodbye.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p333_423.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p248_018.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p333_423.p248_018.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/16/p333_423.p248_018.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/22/p333_423.p248_018.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>3</strong>. How independent is that?</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p274_255.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p312_190.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p274_255.p312_190.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/16/p274_255.p312_190.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/22/p274_255.p312_190.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>4</strong>. The pilot was making a visual approach.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p314_162.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p225_210.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p314_162.p225_210.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/16/p314_162.p225_210.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/22/p314_162.p225_210.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>5</strong>. He asked how they were doing.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p323_377.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p274_424.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p323_377.p274_424.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/16/p323_377.p274_424.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/22/p323_377.p274_424.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>6</strong>. The wedding date has been set for Orlando in Florida in October.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p268_356.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p250_152.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p268_356.p250_152.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/16/p268_356.p250_152.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/22/p268_356.p250_152.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>7</strong>. The rainbow is a division of white light into many beautiful colors. </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p282_007.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p231_471.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p282_007.p231_471.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/16/p282_007.p231_471.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/22/p282_007.p231_471.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>8</strong>. Some have accepted it as a miracle without physical explanation.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p295_013.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p253_039.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p295_013.p253_039.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/16/p295_013.p253_039.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/22/p295_013.p253_039.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>9</strong>. That is the very reason why it was so vital.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p255_343.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p323_361.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p255_343.p323_361.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/16/p255_343.p323_361.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/22/p255_343.p323_361.vc.wav"></audio>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left"><strong>10</strong>. Now, though, he is back playing superbly for Blackburn.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p329_121.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p339_238.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p329_121.p339_238.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/16/p329_121.p339_238.vc.wav"></audio>
+            </td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/22/p329_121.p339_238.vc.wav"></audio>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h2 id="abstract">5. Conclusion<a name="abstract"></a></h2>
+      <p>We proposed GZS-TV, a generalizable zero-shot speaker adaptive TTS and VC model. Specifically, we leverage the VAE and feature disentanglement learning to improve the capacity and generalization ability of GZS-TV. Besides that, we propose a reverse timbre similarity loss to improve the speaker similarity of synthesized speeches. The experimental results demonstrate that GZS-TV can synthesize high-quality speech in ZS scenarios and minimize the performance gaps between seen and unseen speakers. For future work, we plan to investigate speaker information extraction and speaker and text information fusion approaches in ZS scenarios, hence improving the applicability of ZS speaker adaptive TTS in various real-world applications.</p>
+      <footer class="site-footer">
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com/">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+  </body>
+</html>

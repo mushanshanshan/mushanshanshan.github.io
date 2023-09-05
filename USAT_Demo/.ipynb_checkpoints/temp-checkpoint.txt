@@ -1,0 +1,140 @@
+          <tr>
+            <td style="text-align: left"><strong>1</strong>.  A play begin as soon as we set down.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Bangla_0_115.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/mst/Bangla_0_115.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/st/Bangla_0_115.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/your/Bangla_0_115.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/16/Bangla_0_115.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Bangla_0_115.wav"></audio>
+          <tr>
+            <td style="text-align: left"><strong>2</strong>.  They only lifted 750.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Arabic_0_77.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/mst/Arabic_0_77.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/st/Arabic_0_77.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/your/Arabic_0_77.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/16/Arabic_0_77.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Arabic_0_77.wav"></audio>
+          <tr>
+            <td style="text-align: left"><strong>3</strong>.  Everyone has the right to freedom of movement and residence within the borders of each state.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Cantonese_4_107.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/mst/Cantonese_4_107.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/st/Cantonese_4_107.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/your/Cantonese_4_107.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/16/Cantonese_4_107.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Cantonese_4_107.wav"></audio>
+          <tr>
+            <td style="text-align: left"><strong>4</strong>.  I believe that for his escape he took advantage of the migration of a flock of wild birds.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Farsi_1_117.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/mst/Farsi_1_117.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/st/Farsi_1_117.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/your/Farsi_1_117.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/16/Farsi_1_117.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Farsi_1_117.wav"></audio>
+          <tr>
+            <td style="text-align: left"><strong>5</strong>.  The mother heard the baby.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Hindi_5_102.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/mst/Hindi_5_102.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/st/Hindi_5_102.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/your/Hindi_5_102.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/16/Hindi_5_102.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Hindi_5_102.wav"></audio>
+          <tr>
+            <td style="text-align: left"><strong>6</strong>.  Alexander's will include the direction of a monumental temple to Athena Etroy.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Fulfulde_2_59.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/mst/Fulfulde_2_59.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/st/Fulfulde_2_59.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/your/Fulfulde_2_59.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/16/Fulfulde_2_59.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Fulfulde_2_59.wav"></audio>
+          <tr>
+            <td style="text-align: left"><strong>7</strong>.  The boy ran away from school.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Korean_4_100.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/mst/Korean_4_100.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/st/Korean_4_100.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/your/Korean_4_100.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/16/Korean_4_100.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Korean_4_100.wav"></audio>
+          <tr>
+            <td style="text-align: left"><strong>8</strong>.  Everyone has the right to rest and leisure including reasonable limitation of working hours and periodic holidays with pay.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Mandarin_13_104.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/mst/Mandarin_13_104.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/st/Mandarin_13_104.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/your/Mandarin_13_104.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/16/Mandarin_13_104.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Mandarin_13_104.wav"></audio>
+          <tr>
+            <td style="text-align: left"><strong>9</strong>.  It is also an insidious, deceitful sun.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Vietnamese_1_84.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/mst/Vietnamese_1_84.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/st/Vietnamese_1_84.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/your/Vietnamese_1_84.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/16/Vietnamese_1_84.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Vietnamese_1_84.wav"></audio>
+          <tr>
+            <td style="text-align: left"><strong>10</strong>.  The apple pie is good.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Singaporean_Mandarin_0_106.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/mst/Singaporean_Mandarin_0_106.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/st/Singaporean_Mandarin_0_106.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/your/Singaporean_Mandarin_0_106.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/16/Singaporean_Mandarin_0_106.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Singaporean_Mandarin_0_106.wav"></audio>

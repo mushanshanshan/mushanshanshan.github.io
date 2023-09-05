@@ -1,0 +1,10 @@
+Bangla_0_115
+Arabic_0_77
+Cantonese_4_107
+Farsi_1_117
+Hindi_5_102
+Fulfulde_2_59
+Korean_4_100
+Mandarin_13_104
+Vietnamese_1_84
+Singaporean_Mandarin_0_106
