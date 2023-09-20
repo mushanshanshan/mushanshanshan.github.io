@@ -14,7 +14,7 @@
   <body data-new-gr-c-s-check-loaded="14.1001.0" data-gr-ext-installed="">
     <section class="main-content">
       <h1 id="">
-        <center>Generalizable Zero-Shot Speaker Adaptive Speech Synthesis with Disentangled Representations</center>
+        <center>USAT: A Universal Speaker-Adaptive Text-to-Speech Approach</center>
       </h1>
       <center> Wenbin Wang, Yang Song, Sanjay Jha </center>
       <center> School of Computer Science and Engineering,
@@ -22,7 +22,7 @@ University of New South Wales </center>
       <h2>Contents</h2>
       <ul>
         <li><a href="#abstract">Abstract</a></li>
-        <li><a href="#results">Experiment Results</a></li>
+        <li><a href="#results">ESLTTS dataset</a></li>
         <li><a href="#tts">Instant (Zero-shot) Speaker Adaptive Text-to-speech Audio Demos</a></li>
         <ul>
           <li><a href="#3.1">Audio Demos in LibriSpeech (Seen speakers in same dataset)
@@ -30,10 +30,10 @@ University of New South Wales </center>
           <li><a href="#3.3">Audio Demos in VCTK (Unseen speakers in different dataset)</a></li>
           <li><a href="#3.4">Audio Demos in ELSTTS (Accented unseen speakers in different dataset)</a></li>
         </ul>
-        <li><a href="#vc">Zero-shot Voice Conversion Audio Demos</a></li>
+        <li><a href="#vc">Fine-grain (Few-shot) Speaker Adaptive Text-to-speech Audio Demos</a></li>
         <ul>
-          <li><a href="#4.1">Audio Demos in LibriSpeech (Zero-shot Voice Conversion)</a></li>
-          <li><a href="#4.2">Audio Demos in VCTK (Zero-shot Voice Conversion)</a></li>
+          <li><a href="#4.1">Audio Demos in ELSTTS (Accented unseen speakers in different dataset)</a></li>
+          <li><a href="#4.2">Do Adapters Offer Resistance to Overfitting and Catastrophic Forgetting?</a></li>
         </ul>
         <li><a href="#conclusion">Conclusion</a></li>
       </ul>
@@ -44,13 +44,12 @@ University of New South Wales </center>
         <p>** We provide two versions of our method's synthesized speech for the audition: the original version (22050 Hz) and the downsample version (16000 Hz). We used the downsample version when conducting the evaluations since StyleSpeech, Meta-StyleSpeech and YourTTS can only produce 16000 Hz speech.</p>
       </font>
       <h2 id="abstract">1. Abstract<a name="abstract"></a></h2>
-      <p>Conventional text-to-speech (TTS) research has predominantly focused on enhancing the quality of synthesized speech for speakers within the training dataset. The challenge of synthesizing lifelike speech for unseen, out-of-dataset speakers, especially those with limited reference data, remains a significant and unresolved concern. While zero-shot or few-shot speakeradaptive TTS approaches have been explored as possible solutions, they have many limitations. Zero-shot approaches tend to suffer from insufficient generalization performance to reproduce the voice of speakers with heavy accents. While few-shot methods can reproduce most of the voice, they bring a significant storage burden and the risk of overfitting and catastrophic forgetting. Besides, prior researches only focus on either zero-shot or few-shot adaptation, limiting applicability in diverse real-world scenarios. In addition, prior approaches only provide either zeroshot or few-shot adaptation, constraining their utility across varied real-world scenarios with different demands. Moreover, most current evaluations of speaker-adaptive TTS are conducted only on datasets of native speakers, inadvertently neglecting a vast portion of non-native speakers with diverse accents. Our proposed framework offers both zero-shot and few-shot speaker adaptation strategies, which we term as “instant” and “fine-grained” adaptation, respectively, based on their merits. To alleviate the insufficient generalization performance observed in zero-shot speaker adaptation, we designed two innovative discriminators and introduced a memory mechanism for the speech decoder. To prevent catastrophic forgetting and reduce storage implications for few-shot speaker adaptation, we designed two adapters and a unique adaptation procedure. Additionally, we introduce a new TTS dataset that encompasses 44,000 English utterances from 134 non-native speakers, capturing a wide array of non-native English accents. This dataset is intended to enhance holistic evaluations of adaptive TTS capabilities. Through comprehensive experiments on multiple datasets comprising native and non-native speakers, our approach outperforms contemporary methodologies across various subjective and objective metrics.</p>
-      <center><img src='images/pipeline.png' ></center>
+      <p>Conventional text-to-speech (TTS) research has predominantly focused on enhancing the quality of synthesized speech for speakers in the training dataset. The challenge of synthesizing lifelike speech for unseen, out-of-dataset speakers, especially those with limited reference data, remains a significant and unresolved problem. While zero-shot or few-shot speakeradaptive TTS approaches have been explored, they have many limitations. Zero-shot approaches tend to suffer from insufficient generalization performance to reproduce the voice of speakers with heavy accents. While few-shot methods can reproduce highly varying accents, they bring a significant storage burden and the risk of overfitting and catastrophic forgetting. In addition, prior approaches only provide either zero-shot or few-shot adaptation, constraining their utility across varied real-world scenarios with different demands. Besides, most current evaluations of speakeradaptive TTS are conducted only on datasets of native speakers, inadvertently neglecting a vast portion of non-native speakers with diverse accents. Our proposed framework unifies both zeroshot and few-shot speaker adaptation strategies, which we term as “instant” and “fine-grained” adaptations, respectively, based on their merits. To alleviate the insufficient generalization performance observed in zero-shot speaker adaptation, we designed two innovative discriminators and introduced a memory mechanism for the speech decoder. To prevent catastrophic forgetting and reduce storage implications for few-shot speaker adaptation, we designed two adapters and a unique adaptation procedure. Additionally, we introduce a new TTS dataset that encompasses 44,000 English utterances from 134 non-native speakers, capturing a wide array of non-native English accents. This dataset is intended to enhance holistic evaluations of adaptive TTS capabilities. Through comprehensive experiments on multiple datasets comprising both native and non-native speakers, our approach outperforms contemporary methodologies across various subjective and objective metrics.</p>
+      <center><img src='images/overview.png' width="700"></center>
       <br><br>
-      <h2 id="results">2. Experiment Results<a name="abstract"></a></h2>
-      <center><img src='images/ttsres.png' width="1500"></center>
-      <p> </p>
-      <center><img src='images/vcres.png' width="700"></center>
+      <h2 id="results">2. ESLTTS dataset<a name="abstract"></a></h2>
+      <center><img src='images/esl.png' width="700"></center>
+      <p>The preliminary version of our corpus, which we designated as the English as a Second Language TTS dataset (ESLTTS), was collected and cleaned from diverse accent research datasets. The corpus encompasses 44 thousands utterances of 37 hours from 134 non-native speakers of English, with linguistic backgrounds spanning 31 native languages, as shown in Fig. Each speaker is provided with an adaptation set with a total duration of about 5 minutes for speaker adaptation, a test set with 10 utterances for speakeradaptive TTS evaluation, and a development set for further research.</p>
       <br><br>
       <h2>3. Instant (Zero-shot) Speaker Adaptive Text-to-speech Audio Demos<a name="tts"></a></h2>
 
@@ -853,25 +852,7 @@ University of New South Wales </center>
             <td style="text-align: center">USAT <font size=2>22khz</font></td>
           </tr>
           <tr>
-            <td style="text-align: left"><strong>1</strong>.  A play begin as soon as we set down.</td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Bangla_0_115.wav"></audio>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="esltts/ref/Bangla_0_117.wav"></audio>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="esltts/mst/Bangla_0_115.wav"></audio>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="esltts/st/Bangla_0_115.wav"></audio>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="esltts/your/Bangla_0_115.wav"></audio>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="esltts/16/Bangla_0_115.wav"></audio>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Bangla_0_115.wav"></audio>
-            </td>
-          </tr>          
-          <tr>
-            <td style="text-align: left"><strong>2</strong>.  They only lifted 750.</td>
+            <td style="text-align: left"><strong>1</strong>.  They only lifted 750.</td>
             <td style="text-align: center">
               <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Arabic_0_77.wav"></audio>
             <td style="text-align: center">
@@ -889,7 +870,7 @@ University of New South Wales </center>
             </td>
           </tr>          
           <tr>
-            <td style="text-align: left"><strong>3</strong>.  Everyone has the right to freedom of movement and residence within the borders of each state.</td>
+            <td style="text-align: left"><strong>2</strong>.  Everyone has the right to freedom of movement and residence within the borders of each state.</td>
             <td style="text-align: center">
               <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Cantonese_4_107.wav"></audio>
             <td style="text-align: center">
@@ -907,7 +888,7 @@ University of New South Wales </center>
             </td>
           </tr>          
           <tr>
-            <td style="text-align: left"><strong>4</strong>.  I believe that for his escape he took advantage of the migration of a flock of wild birds.</td>
+            <td style="text-align: left"><strong>3</strong>.  I believe that for his escape he took advantage of the migration of a flock of wild birds.</td>
             <td style="text-align: center">
               <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Farsi_1_117.wav"></audio>
             <td style="text-align: center">
@@ -925,7 +906,7 @@ University of New South Wales </center>
             </td>
           </tr>          
           <tr>
-            <td style="text-align: left"><strong>5</strong>.  The mother heard the baby.</td>
+            <td style="text-align: left"><strong>4</strong>.  The mother heard the baby.</td>
             <td style="text-align: center">
               <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Hindi_5_102.wav"></audio>
             <td style="text-align: center">
@@ -943,7 +924,7 @@ University of New South Wales </center>
             </td>
           </tr>          
           <tr>
-            <td style="text-align: left"><strong>6</strong>.  Alexander's will include the direction of a monumental temple to Athena Etroy.</td>
+            <td style="text-align: left"><strong>5</strong>.  Alexander's will include the direction of a monumental temple to Athena Etroy.</td>
             <td style="text-align: center">
               <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Fulfulde_2_59.wav"></audio>
             <td style="text-align: center">
@@ -961,7 +942,7 @@ University of New South Wales </center>
             </td>
           </tr>          
           <tr>
-            <td style="text-align: left"><strong>7</strong>.  The boy ran away from school.</td>
+            <td style="text-align: left"><strong>6</strong>.  The boy ran away from school.</td>
             <td style="text-align: center">
               <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Korean_4_100.wav"></audio>
             <td style="text-align: center">
@@ -979,7 +960,7 @@ University of New South Wales </center>
             </td>
           </tr>          
           <tr>
-            <td style="text-align: left"><strong>8</strong>.  Everyone has the right to rest and leisure including reasonable limitation of working hours and periodic holidays with pay.</td>
+            <td style="text-align: left"><strong>7</strong>.  Everyone has the right to rest and leisure including reasonable limitation of working hours and periodic holidays with pay.</td>
             <td style="text-align: center">
               <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Mandarin_13_104.wav"></audio>
             <td style="text-align: center">
@@ -997,7 +978,7 @@ University of New South Wales </center>
             </td>
           </tr>          
           <tr>
-            <td style="text-align: left"><strong>9</strong>.  It is also an insidious, deceitful sun.</td>
+            <td style="text-align: left"><strong>8</strong>.  It is also an insidious, deceitful sun.</td>
             <td style="text-align: center">
               <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Vietnamese_1_84.wav"></audio>
             <td style="text-align: center">
@@ -1015,7 +996,7 @@ University of New South Wales </center>
             </td>
           </tr>          
           <tr>
-            <td style="text-align: left"><strong>10</strong>.  The apple pie is good.</td>
+            <td style="text-align: left"><strong>9</strong>.  The apple pie is good.</td>
             <td style="text-align: center">
               <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Singaporean_Mandarin_0_106.wav"></audio>
             <td style="text-align: center">
@@ -1032,6 +1013,24 @@ University of New South Wales </center>
               <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Singaporean_Mandarin_0_106.wav"></audio>
             </td>
           </tr>
+                    <tr>
+            <td style="text-align: left"><strong>10</strong>.  It had been so easy.</td>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/gt/Vietnamese_2_86.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/ref/Vietnamese_2_81.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/mst/Vietnamese_2_86.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/st/Vietnamese_2_86.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/your/Vietnamese_2_86.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/16/Vietnamese_2_86.wav"></audio>
+            <td style="text-align: center">
+              <audio style="width: 100px;" controls="" preload="none" src="esltts/22/Vietnamese_2_86.wav"></audio>
+            </td>
+          </tr>
         </tbody>
       </table>
       <p></p>
@@ -1042,199 +1041,8 @@ University of New South Wales </center>
       <a name="4.1">
         <h3>4.1 Audio Demos in ELSTTS (Accented unseen speakers in different dataset)</h3>
       </a>
-      <p> You can find more samples <a href="./els-fine.html">here</a>.</p>
-      <table>
-        <tbody>
-          <tr>
-            <td style="text-align: center"><strong>Text</strong></td>
-            <td style="text-align: center">Source</td>
-            <td style="text-align: center">Target</td>
-            <td style="text-align: center">YourTTS</td>
-            <td style="text-align: center">USAT <font size=2>16khz</font></td>
-            <td style="text-align: center">USAT <font size=2>22khz</font></td>
-          </tr>
-          <tr>
-            <td style="text-align: left"><strong>1</strong>. "The more one knows, the luckier he is, for knowledge is the greatest gift in life."</td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/1284_1180_000042_000001.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/4992_41797_000019_000001.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/1284_1180_000042_000001.4992_41797_000019_000001.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/1284_1180_000042_000001.4992_41797_000019_000001.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/1284_1180_000042_000001.4992_41797_000019_000001.vc.wav"></audio>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: left"><strong>2</strong>. What is it like?"</td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/672_122797_000011_000002.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/1320_122612_000006_000002.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/672_122797_000011_000002.1320_122612_000006_000002.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/672_122797_000011_000002.1320_122612_000006_000002.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/672_122797_000011_000002.1320_122612_000006_000002.vc.wav"></audio>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: left"><strong>3</strong>. The London plant was less temporary, but not permanent, supplying before it was torn out no fewer than three thousand lamps in hotels, churches, stores, and dwellings in the vicinity of Holborn Viaduct.</td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/2300_131720_000002_000002.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/7127_75947_000007_000000.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/2300_131720_000002_000002.7127_75947_000007_000000.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/2300_131720_000002_000002.7127_75947_000007_000000.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/2300_131720_000002_000002.7127_75947_000007_000000.vc.wav"></audio>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: left"><strong>4</strong>. Thus, in Chaucer's "Dream":</td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/1188_133604_000048_000003.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/8555_284447_000020_000004.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/1188_133604_000048_000003.8555_284447_000020_000004.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/1188_133604_000048_000003.8555_284447_000020_000004.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/1188_133604_000048_000003.8555_284447_000020_000004.vc.wav"></audio>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: left"><strong>5</strong>. Who are we ourselves?</td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/4507_16021_000035_000002.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/5683_32866_000036_000000.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/4507_16021_000035_000002.5683_32866_000036_000000.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/4507_16021_000035_000002.5683_32866_000036_000000.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/4507_16021_000035_000002.5683_32866_000036_000000.vc.wav"></audio>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: left"><strong>6</strong>. Like a scene on some vague arras, old as man's weariness, the image of the seventh city of christendom was visible to him across the timeless air, no older nor more weary nor less patient of subjection than in the days of the thingmote.</td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/1089_134691_000015_000002.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/5683_32866_000039_000002.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/1089_134691_000015_000002.5683_32866_000039_000002.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/1089_134691_000015_000002.5683_32866_000039_000002.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/1089_134691_000015_000002.5683_32866_000039_000002.vc.wav"></audio>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: left"><strong>7</strong>. She called him a little gentleman and said that he was so fine that he might go to the royal court ball.</td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/7021_85628_000013_000001.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/1188_133604_000023_000000.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/7021_85628_000013_000001.1188_133604_000023_000000.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/7021_85628_000013_000001.1188_133604_000023_000000.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/7021_85628_000013_000001.1188_133604_000023_000000.vc.wav"></audio>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: left"><strong>8</strong>. "Oh, I can't wait for the story!"</td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/121_127105_000032_000000.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/2300_131720_000035_000004.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/121_127105_000032_000000.2300_131720_000035_000004.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/121_127105_000032_000000.2300_131720_000035_000004.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/121_127105_000032_000000.2300_131720_000035_000004.vc.wav"></audio>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: left"><strong>9</strong>. Water flowed freely through Cousin Ann's expensive pipes, that had been buried so deep in their trenches that the winter frosts could not affect them.</td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/4992_41806_000003_000000.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/1580_141084_000087_000001.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/4992_41806_000003_000000.1580_141084_000087_000001.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/4992_41806_000003_000000.1580_141084_000087_000001.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/4992_41806_000003_000000.1580_141084_000087_000001.vc.wav"></audio>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: left"><strong>10</strong>. Good bye, feet!' (for when she looked down at her feet, they seemed to be almost out of sight, they were getting so far off). 'Oh, my poor little feet, I wonder who will put on your shoes and stockings for you now, dears?</td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/gt/260_123440_000002_000001.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/ref/7176_88083_000018_000002.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/your/260_123440_000002_000001.7176_88083_000018_000002.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/16/260_123440_000002_000001.7176_88083_000018_000002.vc.wav"></audio>
-            </td>
-            <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="lib-vc/22/260_123440_000002_000001.7176_88083_000018_000002.vc.wav"></audio>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <p> Coming soon.</p>
+ 
       
 
 
@@ -1250,26 +1058,26 @@ University of New South Wales </center>
             <td style="text-align: center"><strong>Synthetic utterance by fin-tuning adapters</strong></td>
           </tr>
           <tr>
-            <td style="text-align: left"> We didn't know if people would turn up.</td>
+            <td style="text-align: left"> Tree depth of one hundred twenty-eight.</td>
             <td style="text-align: left"> There are one hundred people.</td>
             <td style="text-align: left"> There are one hundred people.</td>
           </tr>
           <tr>
             <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/gt/p303_218.wav"></audio>
+              <audio style="width: 100px;" controls="" preload="none" src="case/gt.wav"></audio>
             </td>
             <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/ref/p236_162.wav"></audio>
+              <audio style="width: 100px;" controls="" preload="none" src="case/full.wav"></audio>
             </td>
             <td style="text-align: center">
-              <audio style="width: 100px;" controls="" preload="none" src="vctk-vc/your/p303_218.p236_162.vc.wav"></audio>
+              <audio style="width: 100px;" controls="" preload="none" src="case/ada.wav"></audio>
             </td>
           </tr>
         </tbody>
       </table>
 
       <h2 id="abstract">5. Conclusion<a name="abstract"></a></h2>
-      <p>We introduced USAT, a novel universal speaker-adaptive TTS framework, offering two distinct adaptation strategies to tackle challenges in synthesizing speech for unseen speakers in the wild. Key innovations include specialized discriminators for improved generalization and unique adapters to address storage and overfitting concerns. We also proposed ESLTTS dataset, featuring diverse non-native accents, facilitates more holistic speaker-adaptive TTS evaluations and research. Comparative studies affirm USAT’s superior performance over existing methodologies across multiple metrics.</p>
+      <p>We introduced USAT, a novel universal speaker-adaptive TTS framework, offering two distinct adaptation strategies to tackle challenges in synthesizing speech for unseen speakers in the wild. Key innovations include specialized discriminators for improved generalization and unique adapters to address storage and overfitting concerns. We also proposed the ESLTTS dataset, featuring diverse non-native English accents, facilitating more holistic speaker-adaptive TTS evaluations and research. Comparative studies demonstrate USAT’s superior performance over existing methodologies across multiple metrics.</p>
       <footer class="site-footer">
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com/">GitHub Pages</a>.</span>
       </footer>
